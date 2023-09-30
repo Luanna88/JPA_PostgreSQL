@@ -16,10 +16,8 @@ public class Autor {
     @ManyToMany(mappedBy = "autores")
     private List<Livro> livros = new ArrayList<>();
 
-    // Construtores, getters, setters e outros métodos, se necessário
 
     public Autor() {
-        // Construtor padrão
     }
 
     public Autor(String nome) {
