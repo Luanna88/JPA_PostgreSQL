@@ -16,10 +16,8 @@ public class Editora {
     @OneToMany(mappedBy = "editora", cascade = CascadeType.ALL)
     private List<Livro> livros = new ArrayList<>();
 
-    // Construtores, getters, setters e outros métodos, se necessário
 
     public Editora() {
-        // Construtor padrão
     }
 
     public Editora(String nome) {
