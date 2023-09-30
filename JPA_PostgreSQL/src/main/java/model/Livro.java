@@ -31,10 +31,10 @@ public class Livro {
     )
     private List<Autor> autores = new ArrayList<>();
 
-    // Construtores, getters, setters e outros métodos, se necessário
+    
 
     public Livro() {
-        // Construtor padrão
+        
     }
 
     public Livro(String titulo, int ano, String isbn, Categoria categoria, Editora editora, List<Autor> autores) {
@@ -47,29 +47,23 @@ public class Livro {
     }
 
 	public String getTitulo() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public String getAno() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public Categoria getEditora() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public String getIsbn() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public Categoria getCategoria() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-    // Outros métodos, se necessário
 }
