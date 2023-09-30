@@ -16,10 +16,8 @@ public class Categoria {
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL)
     private List<Livro> livros = new ArrayList<>();
 
-    // Construtores, getters, setters e outros métodos, se necessário
 
     public Categoria() {
-        // Construtor padrão
     }
 
     public Categoria(String nome) {
