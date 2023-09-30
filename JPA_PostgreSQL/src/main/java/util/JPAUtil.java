@@ -5,7 +5,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class JPAUtil {
-    private static final String PERSISTENCE_UNIT_NAME = "JPA_PostgreSQL"; // Nome da unidade de persistência no persistence.xml
+    private static final String PERSISTENCE_UNIT_NAME = "JPA_PostgreSQL"; 
     private static EntityManagerFactory entityManagerFactory;
 
     static {
