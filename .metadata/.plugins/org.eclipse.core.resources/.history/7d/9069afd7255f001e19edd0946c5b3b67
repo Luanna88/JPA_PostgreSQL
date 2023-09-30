@@ -1,0 +1,102 @@
+package com.br.biblioteca.JPA_PostgreSQL;
+
+import dao.CategoriaDAO;
+import dao.EditoraDAO;
+import dao.AutorDAO;
+import dao.LivroDAO;
+import model.Categoria;
+import model.Editora;
+import model.Livro;
+import model.Autor;
+import util.JPAUtil;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import java.util.ArrayList;
+import java.util.List;
+
+public class App {
+    public static void main(String[] args) {
+        EntityManager entityManager = JPAUtil.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+
+        try {
+            transaction.begin();
+
+            // Adicionar categorias
+            CategoriaDAO categoriaDAO = new CategoriaDAO();
+
+            Categoria ficcao = new Categoria("Ação");
+            categoriaDAO.save(ficcao);
+
+            Categoria romance = new Categoria("Comédia");
+            categoriaDAO.save(romance);
+
+            Categoria aventura = new Categoria("Romance");
+            categoriaDAO.save(aventura);
+
+            // Adicionar editoras
+            EditoraDAO editoraDAO = new EditoraDAO();
+
+            Editora editora1 = new Editora("");
+            editoraDAO.save(editora1);
+
+            Editora editora2 = new Editora("Editora B");
+            editoraDAO.save(editora2);
+
+            Editora editora3 = new Editora("Editora C");
+            editoraDAO.save(editora3);
+
+            // Adicionar autores
+            AutorDAO autorDAO = new AutorDAO();
+
+            Autor autor1 = new Autor("Autor 1");
+            autorDAO.save(autor1);
+
+            Autor autor2 = new Autor("Autor 2");
+            autorDAO.save(autor2);
+
+            Autor autor3 = new Autor("Autor 3");
+            autorDAO.save(autor3);
+
+            // Criar lista de autores para os livros
+            List<Autor> autores = new ArrayList<>();
+            autores.add(autor1);
+            autores.add(autor2);
+
+            // Adicionar livros
+            LivroDAO livroDAO = new LivroDAO();
+
+            Livro harryPotter = new Livro("Harry Potter", 1999, "123456789", ficcao, editora1, autores);
+            livroDAO.save(harryPotter);
+
+            autores.clear();
+            autores.add(autor2);
+            autores.add(autor3);
+
+            Livro piorQueTaNaoFica = new Livro("Pior que tá não fica?", 2010, "987654321", romance, editora2, autores);
+            livroDAO.save(piorQueTaNaoFica);
+
+            autores.clear();
+            autores.add(autor1);
+
+            Livro oEspadachim = new Livro("O Espadachim", 2022, "111111111", aventura, editora3, autores);
+            livroDAO.save(oEspadachim);
+
+            transaction.commit();
+
+            // Recuperar e exibir os livros
+            List<Livro> livros = livroDAO.findAll();
+            System.out.println("Livros cadastrados:");
+            for (Livro livro : livros) {
+                System.out.println("Livro: " + livro.getTitulo() +
+                        ", Ano: " + livro.getAno() +
+                        ", ISBN: " + livro.getIsbn() +
+                        ", Categoria: " + livro.getCategoria().getNome() +
+                        ", Editora: " + livro.getEditora().getNome());
+            }
+        } finally {
+            entityManager.close();
+            JPAUtil.close();
+        }
+    }
+}

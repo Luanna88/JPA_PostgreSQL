@@ -1,0 +1,55 @@
+package dao;
+
+import model.Categoria;
+import util.JPAUtil;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+import java.util.List;
+
+public class CategoriaDAO {
+    private EntityManager entityManager;
+
+    public CategoriaDAO() {
+        this.entityManager = JPAUtil.getEntityManager();
+    }
+
+    public Categoria findById(Long id) {
+        return entityManager.find(Categoria.class, id);
+    }
+
+    public List<Categoria> findAll() {
+        TypedQuery<Categoria> query = entityManager.createQuery("SELECT c FROM Categoria c", Categoria.class);
+        return query.getResultList();
+    }
+
+    public void save(Categoria categoria) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.persist(categoria);
+        transaction.commit();
+    }
+
+    public void update(Categoria categoria) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.merge(categoria);
+        transaction.commit();
+    }
+
+    public void delete(Long id) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        Categoria categoria = entityManager.find(Categoria.class, id);
+        if (categoria != null) {
+            entityManager.remove(categoria);
+        }
+        transaction.commit();
+    }
+
+    public void close() {
+        if (entityManager != null && entityManager.isOpen()) {
+            entityManager.close();
+        }
+    }
+}

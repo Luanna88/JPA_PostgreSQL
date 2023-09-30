@@ -1,0 +1,57 @@
+package dao;
+
+import model.Autor;
+import util.JPAUtil;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+import java.util.List;
+
+public class AutorDAO {
+    private EntityManager entityManager;
+
+    public AutorDAO() {
+        this.entityManager = JPAUtil.getEntityManager();
+    }
+
+    public Autor findById(Long id) {
+        return entityManager.find(Autor.class, id);
+    }
+
+    public List<Autor> findAll() {
+        TypedQuery<Autor> query = entityManager.createQuery("SELECT a FROM Autor a", Autor.class);
+        return query.getResultList();
+    }
+
+    public void save(Autor autor) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.persist(autor);
+        transaction.commit();
+    }
+
+    public void update(Autor autor) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.merge(autor);
+        transaction.commit();
+    }
+
+    public void delete(Long id) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        Autor autor = entityManager.find(Autor.class, id);
+        if (autor != null) {
+            entityManager.remove(autor);
+        }
+        transaction.commit();
+    }
+
+    public void close() {
+        if (entityManager != null && entityManager.isOpen()) {
+            entityManager.close();
+        }
+    }
+}
+
